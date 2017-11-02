@@ -50,14 +50,15 @@ class EasyABC extends Component {
     }
 
     playSound() {
-        // Get selectors
-        let letterSound = document.querySelector(`audio[data-key="letter"`);
-        let wordSound = document.querySelector(`audio[data-key="word"`);
-
+        // Get selectors only if needed.
         if (this.state.currentTick === 0) {
+            let letterSound = document.querySelector(`audio[data-key="letter"`);
+
             letterSound.currentTime = 0;
             letterSound.play();
         } else {
+            let wordSound = document.querySelector(`audio[data-key="word"`);
+
             wordSound.currentTime = 0;
             wordSound.play();
         }
@@ -87,22 +88,32 @@ class EasyABC extends Component {
                         <audio src={this.state.alphabets[this.state.currentPosition].letterSound} data-key="letter" />
                     </div>
                     <div className="buttons">
-                        <a onClick={this.handlePrevious} className="button prev">Previous</a>
-                        <a onClick={this.playSound} className="button sound">Play Sound Again</a>
-                        <a onClick={this.handleNext} className="button next">Next</a>
+                        <a onClick={this.handlePrevious} className="button prev">
+                            Previous
+                        </a>
+                        <a onClick={this.playSound} className="button sound">
+                            Play Sound Again
+                        </a>
+                        <a onClick={this.handleNext} className="button next">
+                            Next
+                        </a>
                     </div>
                     <div className="fields">
                         <div className="field-block">
                             <div className="left-field">
-                                <div className={classNames("placeholder-span", {"hide": showImage})}>Click next to view image</div>
-                                    <img
-                                        className={classNames("letter-image", {"hide": !showImage})}
-                                        src={this.state.alphabets[this.state.currentPosition].image}
-                                        alt={this.state.alphabets[this.state.currentPosition].word} />
-                                    <audio src={this.state.alphabets[this.state.currentPosition].wordSound} data-key="word" />
+                                <div className={classNames("placeholder-span", {"hide": showImage})}>
+                                    Click next to view image
+                                </div>
+                                <img
+                                    className={classNames("letter-image", {"hide": !showImage})}
+                                    src={this.state.alphabets[this.state.currentPosition].image}
+                                    alt={this.state.alphabets[this.state.currentPosition].word} />
+                                <audio src={this.state.alphabets[this.state.currentPosition].wordSound} data-key="word" />
                             </div>
                             <div className="right-field">
-                                <div className={classNames("placeholder-span", {"hide": showWord})}>Click next to view word</div>
+                                <div className={classNames("placeholder-span", {"hide": showWord})}>
+                                    Click next to view word
+                                </div>
                                 <div className={classNames({"hide": !showWord})}>
                                     {this.state.alphabets[this.state.currentPosition].word.toUpperCase()}
                                 </div>
