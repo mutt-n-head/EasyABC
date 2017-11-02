@@ -11,14 +11,9 @@ class EasyABC extends Component {
             currentTick: 0
         };
 
-        this.playLetterSound = this.playLetterSound.bind(this);
         this.handleNext = this.handleNext.bind(this);
         this.handlePrevious = this.handlePrevious.bind(this);
         this.playSound = this.playSound.bind(this);
-    }
-
-    playLetterSound(e) {
-        // playSound(this.state.alphabets[this.state.currentPosition].wordSound);
     }
 
     handleNext(e) {
