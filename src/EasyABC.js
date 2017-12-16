@@ -2,32 +2,74 @@ import React, {Component} from 'react';
 import Alphabets from './alphabets.json';
 import classNames from 'classnames';
 
-class EasyABC extends Component {
-    constructor(props) {
+class EasyABC extends Component
+{
+    constructor(props)
+    {
         super(props);
-        this.state = {
+
+        this.state =
+        {
             alphabets: Alphabets,
             currentPosition: 0,
-            currentTick: 0
+            currentTick: 0,
+            random: false,
+            sound: true
         };
 
         this.handleNext = this.handleNext.bind(this);
         this.handlePrevious = this.handlePrevious.bind(this);
         this.playSound = this.playSound.bind(this);
+        this.setRandom = this.setRandom.bind(this);
+        this.setSounds = this.setSound.bind(this);
     }
 
-    handleNext(e) {
-        if (this.state.currentTick < 2) {
+    getRandomPageIndex()
+    {
+        return Math.floor(Math.random() * (this.state.alphabets.length) + 1) - 1;
+    }
+
+    setRandom(e)
+    {
+        this.setState({
+            random: !this.state.random
+        });
+    }
+
+    setSound(e)
+    {
+        this.setState({
+            sound: !this.state.sound
+        });
+    }
+
+    handleNext(e)
+    {
+        if (this.state.currentTick < 2)
+        {
             // Just add to tick count, not advancing alphabet index just yet.
             this.setState({
                 currentTick: this.state.currentTick + 1
             });
-        } else {
-            // Increment alphabet index AND tick back to zero.
-            let nextPosition = this.state.currentPosition < Alphabets.length - 1 ? this.state.currentPosition + 1 : 0;
+        }
+        else
+        {
+            let nextPosition = 0;
+
+            if (this.state.random === true)
+            {
+                nextPosition = this.getRandomPageIndex();
+            }
+            else
+            {
+                nextPosition = this.state.currentPosition < Alphabets.length - 1 ? this.state.currentPosition + 1 : 0;
+            }
+
+            console.log('Next position is ' + nextPosition);
+
             this.setState({
-                currentPosition: nextPosition,
-                currentTick: 0
+              currentPosition: nextPosition,
+              currentTick: 0
             });
         }
     }
@@ -80,6 +122,11 @@ class EasyABC extends Component {
 
         return (
             <div className="game">
+                <span className="random-label">Random Letters:</span>
+                <label className="switch">
+                    <input onClick={this.setRandom} type="checkbox" defaultValue="false" value={this.state.random} />
+                    <div className="slider round" />
+                </label>
                 <div className="options">
                     <div className="fields">
                         <div className="field-block">
